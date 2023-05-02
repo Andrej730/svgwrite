@@ -29,6 +29,7 @@ from svgwrite.base import BaseElement
 from svgwrite.mixins import ViewBox, Transform, XLink
 from svgwrite.mixins import Presentation, Clipping
 from svgwrite.etree import CDATA
+import svgwrite
 
 
 class Group(BaseElement, Transform, Presentation):
@@ -284,4 +285,21 @@ class Style(Script):
         """
         super(Style, self).__init__(content=content, **extra)
         self['type'] = "text/css"
+
+
+class ForeignObject(BaseElement, Transform, Presentation):
+    """ The *foreignObject* SVG element includes elements from a different 
+    XML namespace. In the context of a browser, it is most likely (X)HTML.
+
+    """
+    elementname = 'foreignObject'
+
+    def __init__(self, obj, **extra):
+        super().__init__(**extra)
+        self.obj = obj
+
+    def get_xml(self):
+        xml = super(ForeignObject, self).get_xml()
+        xml.append(svgwrite.etree.etree.fromstring(self.obj))
+        return xml
 

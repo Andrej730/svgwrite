@@ -53,6 +53,7 @@ factoryelements = {
     'animateMotion': animate.AnimateMotion,
     'animateTransform': animate.AnimateTransform,
     'filter': filters.Filter,
+    'foreignObject': container.ForeignObject,
 }
 
 
